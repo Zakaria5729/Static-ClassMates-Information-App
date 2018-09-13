@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        app:cardCornerRadius="@dimen/cardview_default_radius"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/listViewItemRL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/imageView"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:scaleType="centerCrop"
+                app:civ_border_color="@android:color/transparent"
+                app:civ_border_width="2dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                tools:src="@drawable/zakaria" />
+
+            <TextView
+                android:id="@+id/texViewName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="zakaria Hossain"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:layout_marginEnd="5dp"
+                android:ellipsize="end"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="15dp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/imageView"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/texViewId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="152-15-5729"
+                android:layout_marginStart="15dp"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_toEndOf="@id/imageView"
+                android:layout_below="@id/texViewName"
+                />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

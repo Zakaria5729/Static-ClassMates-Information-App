@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">ClassMate Info</string>
+
+    <string name="permission_preference_name">PERMISSION_PREFERENCE_NAME</string>
+    <string name="permission_phone_call">PERMISSION_PHONE_CALL</string>
+    <string name="permission_send_email">PERMISSION_SEND_EMAIL</string>
+    <string name="phone">Phone :</string>
+    <string name="email">Email :</string>
+    <string name="your_id">Your ID :</string>
+    <string name="name">Name :</string>
+    <string name="gridimgdes">gridImgDes</string>
+    <string name="to">To:</string>
+    <string name="phone_number">Phone Number:</string>
+    <string name="send_sms">Send SMS:</string>
+    <string name="subject">Subject:</string>
+    <string name="message">Message:</string>
+    <string name="send">Send</string>
+    <string name="send_email">Send Email</string>
+    <string name="backward">Backward</string>
+    <string name="forward">Forward</string>
+    <string name="refresh">Refresh</string>
+    <string name="share_url">Share URL</string>
+    <string name="switch_view">Switch View</string>
+    <string name="web_view">Web View</string>
+
+</resources>
