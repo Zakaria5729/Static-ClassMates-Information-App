@@ -16,7 +16,7 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/listViewItemRL"
+            android:id="@+id/relativeLayoutId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

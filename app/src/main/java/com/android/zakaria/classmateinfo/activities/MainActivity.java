@@ -12,8 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.zakaria.classmateinfo.R;
-import com.android.zakaria.classmateinfo.adapters.StudentAdapterListView;
-import com.android.zakaria.classmateinfo.adapters.StudentAdapterGridView;
+import com.android.zakaria.classmateinfo.adapters.StudentAdapterListAndGridView;
 import com.android.zakaria.classmateinfo.models.StudentInfo;
 
 import java.util.ArrayList;
@@ -23,8 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<StudentInfo> studentInfoList;
     private RecyclerView recyclerView;
-    private StudentAdapterListView studentAdapterListView;
-    private StudentAdapterGridView studentAdapterGridView;
+    private StudentAdapterListAndGridView studentAdapterListAndGridView;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -97,14 +95,14 @@ public class MainActivity extends AppCompatActivity {
     private void switchCategoryViewMode(int selectedCategory) {
         if (selectedCategory == VIEW_MODE_LIST_VIEW) {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            studentAdapterListView = new StudentAdapterListView(this, studentInfoList);
-            recyclerView.setAdapter(studentAdapterListView);
+            studentAdapterListAndGridView = new StudentAdapterListAndGridView(this, studentInfoList, "list_view");
+            recyclerView.setAdapter(studentAdapterListAndGridView);
 
             categoryViewPreferenceSave(VIEW_MODE_LIST_VIEW);
         } else {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-            studentAdapterGridView = new StudentAdapterGridView(this, studentInfoList);
-            recyclerView.setAdapter(studentAdapterGridView);
+            studentAdapterListAndGridView = new StudentAdapterListAndGridView(this, studentInfoList, "grid_view");
+            recyclerView.setAdapter(studentAdapterListAndGridView);
 
             categoryViewPreferenceSave(VIEW_MODE_GRID_VIEW);
             }

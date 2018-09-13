@@ -1,5 +1,6 @@
 package com.android.zakaria.classmateinfo.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -18,27 +19,41 @@ import com.android.zakaria.classmateinfo.R;
 
 import java.util.List;
 
-public class StudentAdapterGridView extends RecyclerView.Adapter<StudentAdapterGridView.StudentViewHolder> {
+public class StudentAdapterListAndGridView extends RecyclerView.Adapter<StudentAdapterListAndGridView.StudentViewHolder> {
 
     private Context context;
     private List<StudentInfo> studentInfoList;
 
-    public StudentAdapterGridView(Context context, List<StudentInfo> studentInfoList) {
+    private View view;
+    private static String adapterViewType;
+
+    public StudentAdapterListAndGridView(Context context, List<StudentInfo> studentInfoList, String adapterViewType) {
         this.context = context;
         this.studentInfoList = studentInfoList;
+        StudentAdapterListAndGridView.adapterViewType = adapterViewType;
     }
 
+    @SuppressLint("InflateParams")
     @NonNull
     @Override
     public StudentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.grid_view_info, null);
+        if (adapterViewType.equals("list_view")) {
+             view = LayoutInflater.from(context).inflate(R.layout.list_view_info, null);
+        } else if (adapterViewType.equals("grid_view")) {
+            view = LayoutInflater.from(context).inflate(R.layout.grid_view_info, null);
+        }
         return new StudentViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull StudentViewHolder holder, int position) {
         final StudentInfo studentInfo = studentInfoList.get(position);
+
         holder.name.setText(studentInfo.getName());
+
+        if (adapterViewType.equals("list_view")) {
+            holder.id.setText(studentInfo.getId());
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             holder.imageView.setImageDrawable(context.getResources().getDrawable(studentInfo.getImage(), null));
@@ -47,7 +62,7 @@ public class StudentAdapterGridView extends RecyclerView.Adapter<StudentAdapterG
         }
 
         /*onclick listener*/
-        holder.relativeLayoutGridView.setOnClickListener(new View.OnClickListener() {
+        holder.relativeLayoutView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailsActivity.class);
@@ -66,19 +81,23 @@ public class StudentAdapterGridView extends RecyclerView.Adapter<StudentAdapterG
         return studentInfoList.size();
     }
 
-    public class StudentViewHolder extends RecyclerView.ViewHolder {
+    static class StudentViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView imageView;
         private TextView name, id;
-        private RelativeLayout relativeLayoutGridView;
+        private RelativeLayout relativeLayoutView;
 
-        public StudentViewHolder(View itemView) {
+        StudentViewHolder(View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.imageView);
             name = itemView.findViewById(R.id.texViewName);
 
-            relativeLayoutGridView = itemView.findViewById(R.id.gridViewItemRL);
+            if (adapterViewType.equals("list_view")) {
+                id = itemView.findViewById(R.id.texViewId);
+            }
+
+            relativeLayoutView = itemView.findViewById(R.id.relativeLayoutId);
         }
     }
 }
