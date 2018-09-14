@@ -2,6 +2,7 @@ package com.android.zakaria.classmateinfo.activities;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -53,28 +54,19 @@ public class SendEmailAndSmsActivity extends AppCompatActivity {
         }
     }
 
-    public void sendToEmailClient(View view) {
+    public void sendToEmailOrSmsClient(View view) {
         String recipients = toET.getText().toString();
-        String[] recipientList = recipients.split(",");
+        String[] emailRecipient = recipients.split(",");
         String message = messageET.getText().toString();
 
         if (smsOrEmailKey.equals("my_phone_number_for_sms")) {
             if (!TextUtils.isEmpty(message) && !TextUtils.isEmpty(recipients)) {
-                try {
-                    SmsManager smsManager = SmsManager.getDefault();
-                    for (String phoneNumbers : recipientList) {
-                        if (message.length() <=  160) {
-                            smsManager.sendTextMessage(phoneNumbers, null, message, null, null);
-                        } else {
-                            ArrayList<String> multiPartsMessage = smsManager.divideMessage(message);
-                            smsManager.sendMultipartTextMessage(phoneNumbers, null, multiPartsMessage, null, null);
-                        }
-                        Toast.makeText(this, "SMS sent successfully.", Toast.LENGTH_LONG).show();
-                    }
-                } catch (Exception ex) {
-                    Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
-                    ex.printStackTrace();
-                }
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setType("vnd.android-dir/mms-sms");
+
+                intent.setData(Uri.parse("sms:" + recipients));
+                intent.putExtra("sms_body", message);
+                startActivity(intent);
             }
             else {
                 Toast.makeText(this, "Please, fill up input fields.", Toast.LENGTH_SHORT).show();
@@ -84,7 +76,7 @@ public class SendEmailAndSmsActivity extends AppCompatActivity {
             String subject = subjectET.getText().toString();
             if (!TextUtils.isEmpty(subject) && !TextUtils.isEmpty(message) && !TextUtils.isEmpty(recipients)) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_EMAIL, recipientList);
+                intent.putExtra(Intent.EXTRA_EMAIL, emailRecipient);
                 intent.putExtra(Intent.EXTRA_SUBJECT, subject);
                 intent.putExtra(Intent.EXTRA_TEXT, message);
 

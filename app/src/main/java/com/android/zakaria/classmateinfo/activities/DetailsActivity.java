@@ -77,7 +77,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     //request for permission (new)
-    private void requestionPermission(int permission) {
+    private void requestPermission(int permission) {
         switch (permission) {
             case TXT_MY_REQUEST_PHONE_CALL:
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_REQUEST_PHONE_CALL_CODE);
@@ -99,7 +99,7 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (permission == TXT_MY_REQUEST_PHONE_CALL) {
-                    requestionPermission(TXT_MY_REQUEST_PHONE_CALL); //request for (new) permission
+                    requestPermission(TXT_MY_REQUEST_PHONE_CALL); //request for (new) permission
                 }
             }
         });
@@ -112,19 +112,18 @@ public class DetailsActivity extends AppCompatActivity {
         });
 
         builder.create().show();
-        /*AlertDialog alertDialog = builder.create();
-        alertDialog.show();*/
     }
 
     public void phoneCallAction(View view) {
-        if (checkPermissionAlreadyGrantedOrNot(TXT_MY_REQUEST_PHONE_CALL) != PackageManager.PERMISSION_GRANTED) {
+        if (checkPermissionAlreadyGrantedOrNot(TXT_MY_REQUEST_PHONE_CALL) == PackageManager.PERMISSION_DENIED) {
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
+             if (!permissionUtils.checkPermissionPreference("phone_call")) {  // for first time permission call (!false means true)
+                requestPermission(TXT_MY_REQUEST_PHONE_CALL);
+                //permissionUtils.updatePermissionPreference("phone_call");
+            }
+             else if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
                 showPermissionExplanationDialog(TXT_MY_REQUEST_PHONE_CALL);
-            } else if (!permissionUtils.checkPermissionPreference("phone_call")) {  // for first time permission call (!false means true)
-                requestionPermission(TXT_MY_REQUEST_PHONE_CALL);
-                permissionUtils.updatePermissionPreference("phone_call");
-            } else {
+            }  else {
                 Toast.makeText(this, "Please, allow phone call permission in your app setting", Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent();
@@ -208,10 +207,10 @@ public class DetailsActivity extends AppCompatActivity {
         String userDetails = "His name is " + name + "\n\n His ID is " + id + "\n\n He has an EMAIL which is " + email + "\n\n And he has a phone number also that is " + phone;
         userDetailList = userDetails.split("\\n\\n");
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             for (String anUserDetailList : userDetailList) {
                 textToSpeech.speak(anUserDetailList, TextToSpeech.QUEUE_ADD, null, null);
+               // textToSpeech.setOnUtteranceProgressListener(new )
                 textToSpeech.playSilentUtterance(250, TextToSpeech.QUEUE_ADD, null);
             }
         } else {
